@@ -19,10 +19,11 @@ a2=dlmread('iira2.txt');
 
 %% Filtrejae FIR con procesamiento por muestra
 [inputSample, Fs]=audioread('elpasofs16000Nb16_3.wav');
-inputSample=inputSample(1:240000);
+inputSample=inputSample(1:160000);
 Na=length(b1);
 Nx=length(inputSample);
 yy=filter(b1,a1,inputSample);
+yyy=filter(b2,a2,yy);
 u=zeros(1,Na);
 yv=[];
 
@@ -50,7 +51,6 @@ end
 inputSample=yv;
 Na=length(b2);
 Nx=length(inputSample);
-yyy=filter(b2,a2,yy);
 u=zeros(1,Na);
 yv=[];
 
@@ -73,10 +73,6 @@ for n=1:Nx
         u(m)=u(m-1);
     end
 end
-
-%%
-sound(yv, Fs);
-
 
 %% Graficas
 figure(1);
@@ -101,13 +97,13 @@ grid on;
 
 figure(2);
 subplot(2,1,1);
-plot(yv);
+plot(yyy);
 xlabel('$Segundos$','Interpreter','latex');
 ylabel('$Amplitud$','Interpreter','latex');
 title('Señal en el tiempo: el paso del gigante');
 grid on;
 
-[Y,W]=freqz(yv,1);
+[Y,W]=freqz(yyy,1);
 subplot(2,1,2);
 plot(W*Fs/(2*pi),abs(Y));
 xlabel('$Hz$','Interpreter','latex');
@@ -116,4 +112,4 @@ title('Señal en frecuencia');
 grid on;
 
 %% Muestra depues de filtraje
-sound(yv, Fs);
+sound(yv(1:160000), Fs);

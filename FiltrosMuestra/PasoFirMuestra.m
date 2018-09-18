@@ -14,9 +14,10 @@ hb2=dlmread('firCoeficientes2.txt');
 lh=length(hb1);
 %inputSample=1:10; % paso del gifante
 [inputSample, Fs]=audioread('elpasofs16000Nb16_3.wav');
-inputSample=inputSample;
+inputSample=inputSample(1:160000);
 Nx=length(inputSample);
-%yy=conv(hb1,inputSample);
+yy=conv(hb1,inputSample);
+yyy=conv(hb2,yy);
 x=zeros(1,Nx+lh-1);
 yv=[];
 
@@ -86,13 +87,13 @@ grid on;
 
 figure(2);
 subplot(2,1,1);
-plot(yv);
+plot(yyy);
 xlabel('$Segundos$','Interpreter','latex');
 ylabel('$Amplitud$','Interpreter','latex');
 title('Señal en el tiempo: el paso del gigante');
 grid on;
 
-[Y,W]=freqz(yv,1);
+[Y,W]=freqz(yyy,1);
 subplot(2,1,2);
 plot(W*Fs/(2*pi),abs(Y));
 xlabel('$Hz$','Interpreter','latex');
@@ -101,6 +102,6 @@ title('Señal en frecuencia');
 grid on;
 
 %% Muestra depues de filtraje
-%sound(yv(1:160000), Fs);
+sound(yv(1:160000), Fs);
 
 
