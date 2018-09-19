@@ -14,7 +14,7 @@ hb2=dlmread('firCoeficientes2.txt');
 lh=length(hb1);
 %inputSample=1:10; % paso del gifante
 [inputSample, Fs]=audioread('elpasofs16000Nb16_3.wav');
-inputSample=inputSample(1:160000);
+%inputSample=inputSample(1:160000);
 Nx=length(inputSample);
 yy=conv(hb1,inputSample);
 yyy=conv(hb2,yy);
@@ -32,8 +32,10 @@ for n=1:Nx+lh-1
     y=0;
     for k=1:lh
         y=y+hb1(k)*x(k);
+        yv(n)=y;
     end
-    yv=[yv y];
+    
+    %yv=[yv y];
     
     for m=lh:-1:2
         x(m)=x(m-1);
@@ -45,7 +47,7 @@ inputSample=yv;
 Nx=length(inputSample);
 lh=length(hb2);
 x=zeros(1,Nx+lh-1);
-yv=[];
+%yv=[];
 for n=1:Nx+lh-1
     if(n<=Nx)
         x(1)=inputSample(n);
@@ -56,8 +58,9 @@ for n=1:Nx+lh-1
     y=0;
     for k=1:lh
         y=y+hb2(k)*x(k);
+        yv(n)=y;
     end
-    yv=[yv y];
+    %yv=[yv y];
     
     for m=lh:-1:2
         x(m)=x(m-1);
