@@ -3,9 +3,9 @@ close all;
 clc;
 
 %% Escrbimos y leemos los coeficientes/opcional
-%dlmwrite('cacadab1.txt', Num, 'delimiter', ',', 'precision', 30); 
+%dlmwrite('cacadab1.txt', Num, 'delimiter', ',', 'precision', 30);
 %dlmwrite('cascada1.txt', Den, 'delimiter', ',', 'precision', 30);
-b=dlmread('cacadab1.txt'); 
+b=dlmread('cacadab1.txt');
 a=dlmread('cascada1.txt');
 
 %% Iniciamos el filtraje IIR por muestra
@@ -33,17 +33,17 @@ for n=1:Nx
     for m=Na:-1:2
         u(m)=u(m-1);
     end
-%     yy
-%     ye
-%     pause
+    %yy
+    %ye
+    %pause
 end
 % Prueba de audio
-sound(yv(1:160000), Fs);
+%sound(yv(1:160000), Fs);
 
-%% Escrbimos y leemos los matriz y ganancia
-%dlmwrite('ganancia.txt', G, 'delimiter', ',', 'precision', 30); 
+%% Escrbimos y leemos la matriz y ganancia
+%dlmwrite('ganancia.txt', G, 'delimiter', ',', 'precision', 30);
 %dlmwrite('matriz.txt', SOS, 'delimiter', ',', 'precision', 30);
-G=dlmread('ganancia.txt'); 
+G=dlmread('ganancia.txt');
 SOS=dlmread('matriz.txt');
 
 %% Iniciamos el filtraje IIR en cascada
@@ -74,10 +74,46 @@ for n=1:Nx
         end
         x=ye;
     end
-%     yy
-%     ye
-%     pause
+    %yy
+    %ye
+    %pause
 end
-
 % Prueba de audio
 sound(yv(1:160000), Fs);
+
+%% Graficas
+figure(1);
+x=inputSample';
+n=0:1/Fs:length(x)/Fs-1/Fs;
+subplot(2,1,1);
+plot(n,x);
+xlabel('$Segundos$','Interpreter','latex');
+ylabel('$Amplitud$','Interpreter','latex');
+title('Señal en el tiempo: el paso del gigante');
+axis([0 205 -.6 .6]);
+grid on;
+
+[X,W]=freqz(x,1);
+subplot(2,1,2);
+plot(W*Fs/(2*pi),abs(X));
+xlabel('$Hz$','Interpreter','latex');
+ylabel('$Magnitud$','Interpreter','latex');
+title('Señal en frecuencia');
+grid on;
+
+figure(2);
+subplot(2,1,1);
+plot(yv);
+xlabel('$Segundos$','Interpreter','latex');
+ylabel('$Amplitud$','Interpreter','latex');
+title('Señal en el tiempo: el paso del gigante');
+axis([0 3.3e6 -.6 .6]);
+grid on;
+
+[Y,W]=freqz(yv,1);
+subplot(2,1,2);
+plot(W*Fs/(2*pi),abs(Y));
+xlabel('$Hz$','Interpreter','latex');
+ylabel('$Magnitud$','Interpreter','latex');
+title('Señal en frecuencia');
+grid on;
