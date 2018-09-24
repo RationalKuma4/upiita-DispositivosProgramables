@@ -3,14 +3,15 @@ close all;
 clear all;
 
 %% Escrbimos y leemos los coeficientes de la funcion de tranferencia/opcional
-%dlmwrite('firCoeficientes1.txt', h, 'delimiter', ',', 'precision', 30);
-hb1=dlmread('firCoeficientes1.txt');
+%dlmwrite('CoeficientesImplement.txt', Num1, 'delimiter', ',', 'precision', 30);
+%hb1=dlmread('firCoeficientes1.txt');
+hb1=dlmread('CoeficientesImplement.txt');
 
 %% Filtrejae FIR con procesamiento por muestra
 % guardar muestras de y
 %h=[1 2 3 4]; % coeficientes del filtro
 lh=length(hb1);
-[inputSample, Fs]=audioread('elpasofs16000Nb16_3.wav');
+[inputSample, Fs]=audioread('elpasofs16000Nb16_32.wav');
 Nx=length(inputSample);
 yy=conv(hb1,inputSample);
 x=zeros(1,Nx+lh-1);
@@ -73,4 +74,5 @@ title('Señal en frecuencia');
 grid on;
 
 %% Muestra depues de filtraje
-sound(yv(1:160000), Fs);
+sound(yv, Fs);
+%sound(yv(1:160000), Fs);
