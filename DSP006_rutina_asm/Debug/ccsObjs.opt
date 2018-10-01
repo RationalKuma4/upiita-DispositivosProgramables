@@ -1,0 +1,1 @@
+"./factfunc.obj" "./main.obj" "./sumfunc.obj" "../C6713dsk.cmd" -llibc.a 
