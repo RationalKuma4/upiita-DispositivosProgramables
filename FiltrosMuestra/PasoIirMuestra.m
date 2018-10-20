@@ -5,11 +5,15 @@ clear all;
 %% Escrbimos y leemos los coeficientes/opcional
 % dlmwrite('iirb1.txt', Num, 'delimiter', ',', 'precision', 30); 
 % dlmwrite('iira1.txt', Den, 'delimiter', ',', 'precision', 30);
-b1=dlmread('iirb1.txt'); 
-a1=dlmread('iira1.txt');
+%b1=dlmread('iirb1.txt'); 
+%a1=dlmread('iira1.txt');
+
+b1=[0.4692    2.7071    6.6117    8.7476    6.6117    2.7071    0.4692];
+a1=[1.0000    4.3088    8.0402    8.2585    4.9041    1.5918    0.2202];
 
 %% Filtrejae FIR con procesamiento por muestra
-[inputSample, Fs]=audioread('elpasofs16000Nb16_3.wav');
+%[inputSample, Fs]=audioread('elpasofs16000Nb16_3.wav');
+inputSample=1:10;
 Na=length(b1);
 Nx=length(inputSample);
 yy=filter(b1,a1,inputSample);
@@ -36,6 +40,8 @@ for n=1:Nx
         u(m)=u(m-1);
     end
 end
+
+yv
 
 %% Graficas
 figure(1);
