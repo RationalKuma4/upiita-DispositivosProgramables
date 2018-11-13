@@ -3,6 +3,7 @@ clear all;
 clc;
 
 recobj=audiorecorder;
+disp("palabra");
 recordblocking(recobj,1);
 hand=getaudiodata(recobj);
-audiowrite('civilizacion.wav',hand,8000);
+audiowrite('robot.wav',hand,8000);
