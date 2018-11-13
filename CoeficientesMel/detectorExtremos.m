@@ -1,8 +1,7 @@
 function [ palabradelimitada , longPal ] = detectorExtremos( Y )
     [~, columnas]=size(Y);
     i=floor(columnas/1024);%numero de veces que calculara el umbral(nºtramas)
-    m=2; %factor de índice de inicio, empieza por 2 porque necesitaremos
-    dato(x-1)
+    m=2; %factor de índice de inicio, empieza por 2 porque necesitaremos dato(x-1)
     n=1026;% factor de índice final
     %esto contara las ventanas consecutivas sin info. para detectar final pronunciación.
     longPal=1;
