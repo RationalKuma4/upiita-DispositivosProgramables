@@ -13,7 +13,7 @@ clc;
 
 recObj = audiorecorder;
 disp('Start speaking.')
-recordblocking(recObj, 1);
+recordblocking(recObj, 1.5);
 disp('End of Recording.');
 play(recObj);
 y = getaudiodata(recObj);
@@ -24,3 +24,9 @@ X = randn(256,256);
 Xapp = randn(256,256);
 D = abs(X-Xapp).^2;
 MSE = sum(D(:))/numel(X)
+
+%%
+close all;
+clear all;
+clc;
+CrearDiccionario(10);

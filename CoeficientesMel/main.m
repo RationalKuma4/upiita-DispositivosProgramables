@@ -29,7 +29,7 @@ palabra1.PalabraContenido = nombreArchivos(1);
 palabra1.MatrizMel = matrizCivi;
 
 palabra2=Palabra;
-palabra2PalabraContenido = nombreArchivos(2);
+palabra2.PalabraContenido = nombreArchivos(2);
 palabra2.MatrizMel = matrizCosmo;
 
 palabra3=Palabra;
@@ -68,50 +68,74 @@ palabras=[palabra1,palabra2,palabra3,palabra4,palabra5,palabra6,palabra7...
     ,palabra8,palabra9,palabra10];
 
 %% Introducimos palabra y escribimos archivo
+
 recObj = audiorecorder;
 disp('Habla.')
-recordblocking(recObj, 1.2);
+recordblocking(recObj, 1.5);
 disp('Fin de grabacion.');
 y = getaudiodata(recObj);
 audiowrite('input.wav',y,8000)
 
-%% Obtenemos coeficientes de la entrada
+%% Obtenemos coeficientes de la entrada y declaramos listas
+
 matrizEntrada=MatrizMel('input.wav');
-
 listaErrores=[];
-listaCorr=[];
+listaDistanciaEuclidiana=[];
+listaCorrelacion=[];
+
+%% Operaciones
+
 for index=1:length(palabras)
-    %disp(palabras(index).PalabraContenido);
+    % Mse
+    mse=MeanSquareError(palabras(index).MatrizMel, matrizEntrada);
+    palabras(index).Mse=mse;
+    listaErrores(index)=mse;
     
-    D=abs(palabras(index).MatrizMel-matrizEntrada).^2;
-    MSE=sum(D(:))/numel(palabras(index).MatrizMel);
-    error=MSE;
+    % Distancia euclidiana
+    distancia=pdist2(palabras(index).MatrizMel, matrizEntrada);
+    sumaDistancia=sum(distancia(:));
+    palabras(index).DistanciaEuclidiana=sumaDistancia;
+    listaDistanciaEuclidiana(index)=sumaDistancia;
     
-    %error=immse(palabras(index).MatrizMel, matrizEntrada);
-    palabras(index).Error=error;
-    listaErrores(index)=error;
-    
-    %corr=corr(palabras(index).MatrizMel, matrizEntrada);
-    %palabras(index).Correlacion=corr;
-    %listaCorr(index)=corr;
+    % Correlacion
+    correlacion=corr2(palabras(index).MatrizMel, matrizEntrada);
+    palabras(index).Correlacion=correlacion;
+    listaCorrelacion(index)=correlacion;
 end
 
-errorMinimo=min(listaErrores);
-corrMax=max(listaCorr);
+
+%% Econtrar valores optimos y compara
+errorMin=min(listaErrores);
+corrMax=max(listaCorrelacion);
+distMin=min(listaDistanciaEuclidiana);
 
 for index=1:length(palabras)
-    %disp(palabras(index).PalabraContenido);
-    if(errorMinimo==palabras(index).Error)
-        disp('Palabra');
-        disp(palabras(index).PalabraContenido);
+    % Mse
+    if(errorMin==palabras(index).Mse)
+        err=palabras(index).PalabraContenido;
     end
     
+    % Distancia
+    if(distMin==palabras(index).DistanciaEuclidiana)
+        dist=palabras(index).PalabraContenido;
+    end
+    
+    % Correlacion 
     if(corrMax==palabras(index).Correlacion)
-        disp('Palabra correlacion');
-        disp(palabras(index).PalabraContenido);
+        corrr=palabras(index).PalabraContenido;
     end
 end
 
-% Correlacion de las matrices
-% output=corr(matrizFiltro, matrizEntrada);
-% output(isnan(output))=0;
+%% Reslutados
+
+disp('');
+disp('Palabra por mse');
+disp(err);
+disp('Palabra por distancia');
+disp(dist);
+disp('Palabra por correlacion');
+disp(corrr);
+disp('');
+
+
+
