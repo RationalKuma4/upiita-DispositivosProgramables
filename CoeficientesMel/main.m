@@ -83,7 +83,7 @@ listaErrores=[];
 listaDistanciaEuclidiana=[];
 listaCorrelacion=[];
 
-%% Operaciones
+% Operaciones
 
 for index=1:length(palabras)
     % Mse
@@ -104,7 +104,7 @@ for index=1:length(palabras)
 end
 
 
-%% Econtrar valores optimos y compara
+% Econtrar valores optimos y compara
 errorMin=min(listaErrores);
 corrMax=max(listaCorrelacion);
 distMin=min(listaDistanciaEuclidiana);
@@ -126,15 +126,20 @@ for index=1:length(palabras)
     end
 end
 
-%% Reslutados
-
-disp('');
+% Reslutados
+disp('¿Es alguna de estas palabras?');
 disp('Palabra por mse');
 disp(err);
 disp('Palabra por distancia');
 disp(dist);
 disp('Palabra por correlacion');
 disp(corrr);
+% resp=input('s/n ');
+% if(resp=='s')
+%     disp(':)');
+% else
+%     disp(':(');
+% end
 disp('');
 
 
