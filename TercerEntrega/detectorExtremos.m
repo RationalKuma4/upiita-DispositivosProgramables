@@ -1,4 +1,4 @@
-function [ palabradelimitada , longPal ] = detectorExtremos( Y )
+function [ palabradelimitada ] = detectorExtremos( Y )
     [~, columnas]=size(Y);
     i=floor(columnas/1024);%numero de veces que calculara el umbral(nºtramas)
     m=2; %factor de índice de inicio, empieza por 2 porque necesitaremos dato(x-1)
@@ -6,7 +6,7 @@ function [ palabradelimitada , longPal ] = detectorExtremos( Y )
     %esto contara las ventanas consecutivas sin info. para detectar final pronunciación.
     longPal=1;
     t=0;
-
+    palabradelimitada=zeros(1,4000);
     for j=1:1:i %esto segmentara la señal en tramas
         umbral=0;
         for k=m:1:n %bucle recorre muestras de n a m y calcula el umbral de la trama

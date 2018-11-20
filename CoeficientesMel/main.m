@@ -7,11 +7,6 @@ nombreArchivos=["civilizacion.wav", "cosmonauta.wav", "filtro.wav",...
     "gato.wav", "laser.wav", "libro.wav", "perico.wav", "perro.wav",...
     "proton.wav", "robot.wav"];
 
-% Agregamos ruta de archivos
-currentFile = mfilename( 'fullpath' );
-[pathstr,~,~] = fileparts( currentFile );
-addpath( fullfile( pathstr, 'Audios' ) );
-
 % Obetenmos coeficientes de nuestro diccionario
 matrizCivi=MatrizMel(nombreArchivos(1));
 matrizCosmo=MatrizMel(nombreArchivos(2));

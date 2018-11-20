@@ -1,0 +1,8 @@
+Lista.obj
+Lista_emxAPI.obj
+Lista_emxutil.obj
+Lista_initialize.obj
+Lista_terminate.obj
+rtGetInf.obj
+rtGetNaN.obj
+rt_nonfinite.obj
