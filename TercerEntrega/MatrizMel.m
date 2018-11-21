@@ -1,23 +1,30 @@
 function [matrixCoefficients] = MatrizMel(audio)
+    % Variables
     alpha=0.5; %Parámetro de la ventana de Hamming
     NFFT=256; %Número de puntos de la FFT
     delta=160; %Traslape
     Lwin=400; %Tamaño de ventana
     Nfiltros = 20;
     
+    % Archivos
     currentFile = mfilename( 'fullpath' );
     [pathstr,~,~] = fileparts( currentFile );
     addpath( fullfile( pathstr, 'Audios' ) );
     
+    % Abrir archivo y normalizar valores
     [yy,Fs]=audioread(audio);
     yy=yy';
     yy=yy/max(yy);
     %[palabradelimitada]=detectorExtremos(yy);
     %y1=palabradelimitada;
-
-    y=filter([1,-0.95],1,yy); %Filtro de preenfasis y(n)= y1(n)-0.95*y1(n-1);
+    
+    
     n=0:Lwin-1;
     W=(1-alpha)-alpha*cos(2*pi*n/Lwin); %Ventana de Hamming
+    dlmwrite('W.txt', W, 'delimiter', ',', 'precision', 5);
+    
+    y=filter([1,-0.95],1,yy); %Filtro de preenfasis y(n)= y1(n)-0.95*y1(n-1);
+    dlmwrite('y.txt', y, 'delimiter', ',', 'precision', 5);
 
     %Frecuencias de Mel
     f1=300; %Frecuencia en Hz inicial
@@ -25,9 +32,13 @@ function [matrixCoefficients] = MatrizMel(audio)
     f2=Fs/2; %Frecuencia en Hz final
     fmel2=1125*log(1+f2/700);
     deltamel=(fmel2-fmel1)/(Nfiltros+1);
+    
     fmel=fmel1:deltamel:fmel2;
+    dlmwrite('mel.txt', fmel, 'delimiter', ',', 'precision', 5);
+    
     f_Hz=700*(exp(fmel/1125)-1); %Vector de frecuencias en Hz
     f_norm=floor((NFFT+1)*f_Hz/Fs); %Vector de frecuencias discretas: 1->NFFT
+    dlmwrite('f_norma.txt', f_norm, 'delimiter', ',', 'precision', 5);
 
     %Obtención del banco de filtros de Mel
     % figure(1);
