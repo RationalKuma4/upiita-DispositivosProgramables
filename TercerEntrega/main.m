@@ -2,7 +2,12 @@ clear all;
 close all;
 clc;
 
-%% Obtenemos vectores de silabas
+%% Agregamos ruta de archivos
+currentFile = mfilename( 'fullpath' );
+[pathstr,~,~] = fileparts( currentFile );
+addpath( fullfile( pathstr, 'Audios' ) );
+    
+% Obtenemos vectores de silabas
 [bro,Fs] = audioread('bro.wav');
 [fa,Fs] = audioread('fa.wav');
 [ma,Fs] = audioread('ma.wav');
@@ -20,12 +25,12 @@ vectorPa=VectorNormalizado(pa);
 vectorRo=VectorNormalizado(ro);
 
 %% Obtenemos matriz de coeficientes
-broMatriz=MatrizMel('bro.wav');
-faMatriz=MatrizMel('fa.wav');
-maMatriz=MatrizMel('ma.wav');
-moMatriz=MatrizMel('mo.wav');
-paMatriz=MatrizMel('pa.wav');
-roMatriz=MatrizMel('ro.wav');
+matrizbro=MatrizMel('bro.wav');
+matrizfa=MatrizMel('fa.wav');
+matrizma=MatrizMel('ma.wav');
+matrizmo=MatrizMel('mo.wav');
+matrizpa=MatrizMel('pa.wav');
+matrizro=MatrizMel('ro.wav');
 
 %% Escribimos coeficientes
 dlmwrite('vbro.txt', vectorBro, 'delimiter', ',', 'precision', 5);
@@ -36,9 +41,9 @@ dlmwrite('vpo.txt', vectorPa, 'delimiter', ',', 'precision', 5);
 dlmwrite('vro.txt', vectorRo, 'delimiter', ',', 'precision', 5);
 
 %% Escribimos matrices
-dlmwrite('cbro.txt', broMatriz, 'delimiter', ',', 'precision', 5);
-dlmwrite('cfa.txt', faMatriz, 'delimiter', ',', 'precision', 5);
-dlmwrite('cma.txt', maMatriz, 'delimiter', ',', 'precision', 5);
-dlmwrite('cmo.txt', moMatriz, 'delimiter', ',', 'precision', 5);
-dlmwrite('cpo.txt', paMatriz, 'delimiter', ',', 'precision', 5);
-dlmwrite('cro.txt', roMatriz, 'delimiter', ',', 'precision', 5);
+dlmwrite('cbro.txt', matrizbro, 'delimiter', ',', 'precision', 5);
+dlmwrite('cfa.txt', matrizfa, 'delimiter', ',', 'precision', 5);
+dlmwrite('cma.txt', matrizma, 'delimiter', ',', 'precision', 5);
+dlmwrite('cmo.txt', matrizmo, 'delimiter', ',', 'precision', 5);
+dlmwrite('cpo.txt', matrizpa, 'delimiter', ',', 'precision', 5);
+dlmwrite('cro.txt', matrizro, 'delimiter', ',', 'precision', 5);

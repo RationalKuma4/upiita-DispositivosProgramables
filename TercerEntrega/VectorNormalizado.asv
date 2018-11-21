@@ -7,10 +7,10 @@ function [vector] = VectorNormalizado(y)
     yy=yy/max(yy);
     %[vector]=detectorExtremos(yy);
   
-    %[r,c]=size(yy);
-    %diferenciaCol=4000-c;
-    %b=padarray(yy,[0 diferenciaCol],0,'post');
-    yy(isnan(yy))=0;
-    vector=yy;
+    [r,c]=size(yy);
+    diferenciaCol=4000-c;
+    b=padarray(yy,[0 diferenciaCol],0,'post');
+    b(isnan(b))=0;
+    vector=b;
 end
 

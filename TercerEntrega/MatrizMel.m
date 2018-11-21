@@ -5,13 +5,17 @@ function [matrixCoefficients] = MatrizMel(audio)
     Lwin=400; %Tamaño de ventana
     Nfiltros = 20;
     
+    currentFile = mfilename( 'fullpath' );
+    [pathstr,~,~] = fileparts( currentFile );
+    addpath( fullfile( pathstr, 'Audios' ) );
+    
     [yy,Fs]=audioread(audio);
     yy=yy';
     yy=yy/max(yy);
-    [palabradelimitada]=detectorExtremos(yy);
-    y1=palabradelimitada;
+    %[palabradelimitada]=detectorExtremos(yy);
+    %y1=palabradelimitada;
 
-    y=filter([1,-0.95],1,y1); %Filtro de preenfasis y(n)= y1(n)-0.95*y1(n-1);
+    y=filter([1,-0.95],1,yy); %Filtro de preenfasis y(n)= y1(n)-0.95*y1(n-1);
     n=0:Lwin-1;
     W=(1-alpha)-alpha*cos(2*pi*n/Lwin); %Ventana de Hamming
 
@@ -65,11 +69,11 @@ function [matrixCoefficients] = MatrizMel(audio)
         ntrama=ntrama+1;
     end
 
-    [r, c]=size(MFCC);
-    diferenciaRows=80-r;
-    diferenciaCol=30-c;
-    b=padarray(MFCC,[diferenciaRows diferenciaCol],0,'post');
-    b(isnan(b))=0;
-    matrixCoefficients=b;
+%     [r, c]=size(MFCC);
+%     diferenciaRows=80-r;
+%     diferenciaCol=30-c;
+%     b=padarray(MFCC,[diferenciaRows diferenciaCol],0,'post');
+    MFCC(isnan(MFCC))=0;
+    matrixCoefficients=MFCC;
 end
 

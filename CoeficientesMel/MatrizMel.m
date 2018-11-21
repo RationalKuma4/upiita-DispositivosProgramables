@@ -4,19 +4,19 @@ function [matrixCoefficients] = MatrizMel(audio)
     delta=160; %Traslape
     Lwin=400; %Tamaño de ventana
     Nfiltros = 20;
-    
+
     % Agregamos ruta de archivos
     currentFile = mfilename( 'fullpath' );
     [pathstr,~,~] = fileparts( currentFile );
     addpath( fullfile( pathstr, 'Audios' ) );
-    
+
     [yy,Fs]=audioread(audio);
     yy=yy';
     yy=yy/max(yy);
     [palabradelimitada, longPal]=detectorExtremos(yy);
     y1=palabradelimitada;
 
-    y=filter([1,-0.95],1,yy); %Filtro de preenfasis y(n)= y1(n)-0.95*y1(n-1);
+    y=filter([1,-0.95],1,y1); %Filtro de preenfasis y(n)= y1(n)-0.95*y1(n-1);
     n=0:Lwin-1;
     W=(1-alpha)-alpha*cos(2*pi*n/Lwin); %Ventana de Hamming
 
@@ -63,7 +63,7 @@ function [matrixCoefficients] = MatrizMel(audio)
             temp=0;
             for l=1:Nfiltros
                 temp= temp+(log(energia(ntrama+1,k))*cos(l*(k-0.5)*pi/Nfiltros)); %Obtención de los coeficientes cepstrales
-            end %usando la DCT 
+            end %usando la DCT
             MFCC(ntrama+1,k)=temp;
         end
         n=n+delta;
@@ -71,10 +71,10 @@ function [matrixCoefficients] = MatrizMel(audio)
     end
 
     [r, c]=size(MFCC);
-%     diferenciaRows=80-r;
-%     diferenciaCol=30-c;
-%     b=padarray(MFCC,[diferenciaRows diferenciaCol],0,'post');
-%     b(isnan(b))=0;
+    %     diferenciaRows=80-r;
+    %     diferenciaCol=30-c;
+    %     b=padarray(MFCC,[diferenciaRows diferenciaCol],0,'post');
+    MFCC(isnan(MFCC))=0;
     matrixCoefficients=MFCC(1:30,1:20);
 end
 

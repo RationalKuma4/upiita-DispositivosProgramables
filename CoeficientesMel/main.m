@@ -74,11 +74,12 @@ audiowrite('input.wav',y,8000)
 %% Obtenemos coeficientes de la entrada y declaramos listas
 
 matrizEntrada=MatrizMel('input.wav');
+
+
+%% Operaciones
 listaErrores=[];
 listaDistanciaEuclidiana=[];
 listaCorrelacion=[];
-
-% Operaciones
 
 for index=1:length(palabras)
     % Mse
@@ -97,7 +98,6 @@ for index=1:length(palabras)
     palabras(index).Correlacion=correlacion;
     listaCorrelacion(index)=correlacion;
 end
-
 
 % Econtrar valores optimos y compara
 errorMin=min(listaErrores);
@@ -136,6 +136,4 @@ disp(corrr);
 %     disp(':(');
 % end
 disp('');
-
-
 
