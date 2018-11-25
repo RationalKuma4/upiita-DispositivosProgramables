@@ -129,11 +129,5 @@ disp('Palabra por distancia');
 disp(dist);
 disp('Palabra por correlacion');
 disp(corrr);
-% resp=input('s/n ');
-% if(resp=='s')
-%     disp(':)');
-% else
-%     disp(':(');
-% end
 disp('');
 

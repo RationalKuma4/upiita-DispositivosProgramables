@@ -80,11 +80,11 @@ function [matrixCoefficients] = MatrizMel(audio)
         ntrama=ntrama+1;
     end
 
-%     [r, c]=size(MFCC);
-%     diferenciaRows=80-r;
-%     diferenciaCol=30-c;
-%     b=padarray(MFCC,[diferenciaRows diferenciaCol],0,'post');
-    MFCC(isnan(MFCC))=0;
-    matrixCoefficients=MFCC;
+    [r, c]=size(MFCC);
+    diferenciaRows=50-r;
+    diferenciaCol=25-c;
+    b=padarray(MFCC,[diferenciaRows diferenciaCol],0,'post');
+    b(isnan(b))=0;
+    matrixCoefficients=b;
 end
 
