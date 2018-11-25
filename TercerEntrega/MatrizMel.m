@@ -56,7 +56,7 @@ function [matrixCoefficients] = MatrizMel(audio)
             end
         end
     end
-
+    dlmwrite('Hm.txt', Hm, 'delimiter', ',', 'precision', 5);
 
     %Rutina para entramado, FFT, energía, MFCC
     n=0;

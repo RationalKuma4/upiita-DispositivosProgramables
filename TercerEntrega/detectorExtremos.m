@@ -15,7 +15,7 @@ function [ palabradelimitada ] = detectorExtremos( Y )
 
         %evolucionUmbral(n)=umbral; %se almacena el valor cada 1024 posiciones
         %=DETECTOR INICIO=> si supera umbral se empieza a almacenar tramas
-        if (umbral>.55) %comprobamos si se detecta inicio, si supera Umbral Inicio=1.25
+        if (umbral>.75) %comprobamos si se detecta inicio, si supera Umbral Inicio=1.25
             t=0;
             longPal=longPal+1024;
             palabradelimitada(longPal-1024:longPal)=Y(m:n); %almacenamos tramas si t<15

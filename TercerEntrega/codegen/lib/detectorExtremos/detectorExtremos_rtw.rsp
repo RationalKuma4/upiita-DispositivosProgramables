@@ -1,0 +1,6 @@
+detectorExtremos.obj
+detectorExtremos_initialize.obj
+detectorExtremos_terminate.obj
+rtGetInf.obj
+rtGetNaN.obj
+rt_nonfinite.obj
